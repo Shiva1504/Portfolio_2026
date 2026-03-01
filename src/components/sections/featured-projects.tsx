@@ -59,11 +59,11 @@ function ProjectVisual({ projectId, index }: { projectId: string; index: number 
       </div>
 
       {/* Bottom hint */}
-      <div className="absolute bottom-4 left-0 right-0 text-center">
+      {/* <div className="absolute bottom-4 left-0 right-0 text-center">
         <p className="text-[10px] text-muted-foreground/30">
           Replace with screenshot: /public/projects/{projectId}.png
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }
