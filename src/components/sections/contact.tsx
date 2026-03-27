@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, Github, Linkedin, ArrowUpRight } from "lucide-react";
+import { Mail, Github, Linkedin, ArrowUpRight, Phone, Download, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { profile } from "@/data/profile";
@@ -27,6 +27,13 @@ const links = [
     icon: Linkedin,
     external: true,
   },
+  {
+    label: "Phone",
+    value: profile.phone,
+    href: `tel:${profile.phone.replace(/\s/g, "")}`,
+    icon: Phone,
+    external: false,
+  },
 ];
 
 export function Contact() {
@@ -48,16 +55,26 @@ export function Contact() {
         </AnimatedSection>
 
         <AnimatedSection delay={0.1} className="mt-10">
-          <Button size="lg" asChild>
-            <a href={`mailto:${profile.email}`}>
-              <Mail className="mr-2 h-4 w-4" />
-              Send me an email
-            </a>
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Button size="lg" asChild>
+              <a href={`mailto:${profile.email}`}>
+                <Mail className="mr-2 h-4 w-4" />
+                Send me an email
+              </a>
+            </Button>
+            {profile.resumeUrl && (profile.resumeUrl as string) !== "#" && (
+              <Button size="lg" variant="outline" asChild>
+                <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
+                  <FileText className="mr-2 h-4 w-4" />
+                  Download Resume
+                </a>
+              </Button>
+            )}
+          </div>
         </AnimatedSection>
 
         <AnimatedSection delay={0.2} className="mt-12">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
             {links.map((link) => (
               <a
                 key={link.label}
@@ -65,7 +82,7 @@ export function Contact() {
                 {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                <link.icon className="h-4 w-4" />
+                <link.icon className="h-4 w-4 shrink-0" />
                 <span>{link.value}</span>
                 <ArrowUpRight className="h-3 w-3 opacity-0 -translate-y-0.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all" />
               </a>

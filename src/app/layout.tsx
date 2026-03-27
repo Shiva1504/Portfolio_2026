@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "REST API",
     "PHP",
     "TypeScript",
-    "Mumbai",
+    "Pune",
     "India",
   ],
   authors: [{ name: "Dasari Sambasiva Naidu" }],
