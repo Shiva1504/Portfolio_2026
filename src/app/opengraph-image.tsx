@@ -24,9 +24,9 @@ export default function Image() {
           <path
             d="M7 8L3 11.6923L7 16M17 8L21 11.6923L17 16M14 4L10 20"
             stroke="#ffffff"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
         <div style={{ color: "#e6edf3", fontSize: 52, fontWeight: 700, letterSpacing: "-1px" }}>
