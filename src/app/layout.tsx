@@ -8,6 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://portfolio-2026-theta-three.vercel.app"),
   title: "Sambasiva Naidu | Software Engineer",
   description:
     "Software engineer focused on outcomes, not frameworks. I design systems, ship products, and optimize what's slow across APIs, web apps, AI, and infrastructure.",
