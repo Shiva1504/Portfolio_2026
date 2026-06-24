@@ -3,6 +3,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/components/sections/hero";
 import { Capabilities } from "@/components/sections/capabilities";
+import { HowIThink } from "@/components/sections/how-i-think";
 import { FeaturedProjects } from "@/components/sections/featured-projects";
 import { Experience } from "@/components/sections/experience";
 import { Skills } from "@/components/sections/skills";
@@ -17,6 +18,7 @@ export default function Home() {
       <main>
         <Hero />
         <Capabilities />
+        <HowIThink />
         <FeaturedProjects />
         <Experience />
         <Skills />

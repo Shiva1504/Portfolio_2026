@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Terminal } from "@/components/terminal/Terminal";
 
 export const metadata: Metadata = {
-  title: "Playground — Sambasiva Naidu",
+  title: "Playground | Sambasiva Naidu",
   description: "Interactive developer terminal. Type /help to get started.",
 };
 

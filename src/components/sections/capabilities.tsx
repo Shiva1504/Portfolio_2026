@@ -4,6 +4,7 @@ import { Server, Layout, Brain, Cloud } from "lucide-react";
 import { SectionHeader } from "@/components/shared/section-header";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { TechBadge } from "@/components/shared/tech-badge";
+import { Spotlight } from "@/components/shared/spotlight";
 import { capabilities } from "@/data/skills";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -20,13 +21,14 @@ export function Capabilities() {
         <SectionHeader
           label="What I Do"
           title="Engineering capabilities"
-          description="I don't just write code — I solve business problems with reliable, scalable systems."
+          description="I don't just write code. I solve business problems with reliable, scalable systems."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {capabilities.map((cap, i) => (
-            <AnimatedSection key={cap.id} delay={i * 0.1}>
-              <div className="group relative rounded-xl border border-border/50 bg-card/50 p-8 hover:border-border hover:bg-card/80 transition-all duration-300">
+            <AnimatedSection key={cap.id} delay={i * 0.1} className="h-full">
+              <Spotlight className="h-full rounded-xl">
+              <div className="group relative z-10 h-full rounded-xl border border-border/50 bg-card/50 p-8 hover:border-border hover:bg-card/80 transition-all duration-300">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-muted text-foreground">
                     {iconMap[cap.id]}
@@ -58,6 +60,7 @@ export function Capabilities() {
                   ))}
                 </div>
               </div>
+              </Spotlight>
             </AnimatedSection>
           ))}
         </div>

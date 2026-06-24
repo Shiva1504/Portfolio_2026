@@ -17,11 +17,11 @@ export const experiences: Experience[] = [
     company: "Sportiff India Pvt. Ltd.",
     type: "Full-time · Hybrid",
     period: "Sep 2025 – Present",
-    location: "Pune, India",
+    location: "Mumbai, India",
     description:
-      "Contributing to a production ERP ecosystem — Admin Panel, B2B Catalog, ArenaSport, Warehouse & Orders — across full-stack development, infrastructure, and AI integrations.",
+      "Own problems end-to-end across a production ERP ecosystem: Admin Panel, B2B Catalog, ArenaSport, Warehouse and Orders. Whatever the work needs that week, whether backend APIs, frontend, server migrations, or AI integrations, I pick up the tool and ship it.",
     achievements: [
-      "Migrated production infrastructure from TMD Hosting to Hostinger — transferred all files, databases, and DNS records with zero downtime",
+      "Migrated production infrastructure from TMD Hosting to Hostinger, transferring all files, databases, and DNS records with zero downtime",
       "Deployed 7+ environments across staging and production: newproject, b2b.catalog, staging.api.sportsdrive, ArenaSport, main website, B2B, and Sponsorship",
       "Developed ArenaSport APIs and updated Admin Panel backend APIs using Laravel",
       "Built Next.js Admin Panel and Catalog frontends with role-based UI access control and permission-based module visibility",
@@ -58,7 +58,7 @@ export const experiences: Experience[] = [
     period: "July 2025 – Sep 2025",
     location: "Remote",
     description:
-      "Built and maintained Laravel-based web applications while learning production-grade development practices in an Agile team environment.",
+      "Ramped quickly into production-grade development practices in an Agile team, shipping real features while learning the discipline behind clean, maintainable systems.",
     achievements: [
       "Built reusable, clean PHP code following Laravel best practices and MVC architecture",
       "Integrated REST APIs, optimized database queries, and improved page load times",

@@ -1,26 +1,47 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, MapPin, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Spotlight } from "@/components/shared/spotlight";
+import { MagneticButton } from "@/components/shared/magnetic-button";
 import { profile } from "@/data/profile";
 
-export function Hero() {
-  return (
-    <section className="relative min-h-[92vh] flex items-center justify-center px-6 overflow-hidden">
-      {/* Background atmosphere — two gradient blobs for depth */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-primary/[0.07] rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[300px] bg-blue-500/[0.05] rounded-full blur-3xl" />
-      </div>
+const headlineWords = profile.headline.split(" ");
 
-      <div className="mx-auto max-w-4xl text-center pt-16">
+export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  // Subtle parallax: stats drift down, atmosphere drifts up as you scroll out.
+  const statsY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const atmosphereY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative min-h-[92vh] flex items-center justify-center px-6 overflow-hidden"
+    >
+      {/* Background atmosphere — drifting gradient blobs for living depth */}
+      <motion.div
+        style={{ y: atmosphereY }}
+        className="absolute inset-0 -z-10 overflow-hidden"
+      >
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-primary/[0.07] rounded-full blur-3xl animate-gradient-drift" />
+        <div className="absolute bottom-1/4 right-1/4 w-[420px] h-[320px] bg-blue-500/[0.06] rounded-full blur-3xl animate-gradient-drift-alt" />
+        <div className="absolute top-1/4 left-1/5 w-[320px] h-[260px] bg-violet-500/[0.04] rounded-full blur-3xl animate-gradient-drift-alt" />
+      </motion.div>
+
+      <Spotlight size={520} className="mx-auto max-w-4xl text-center pt-16">
         {/* Availability badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-muted/50 px-4 py-1.5 mb-8"
+          className="relative z-10 inline-flex items-center gap-2 rounded-full border border-border/60 bg-muted/50 px-4 py-1.5 mb-8"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -29,22 +50,34 @@ export function Hero() {
           <span className="text-sm text-muted-foreground">{profile.availability}</span>
         </motion.div>
 
-        {/* Headline */}
+        {/* Headline — word-by-word reveal */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.1]"
+          initial="hidden"
+          animate="visible"
+          transition={{ staggerChildren: 0.045, delayChildren: 0.1 }}
+          className="relative z-10 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-[1.1]"
         >
-          {profile.headline}
+          {headlineWords.map((word, i) => (
+            <motion.span
+              key={`${word}-${i}`}
+              variants={{
+                hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
+                visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="inline-block mr-[0.25em]"
+            >
+              {word}
+            </motion.span>
+          ))}
         </motion.h1>
 
         {/* Subheadline */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="relative z-10 mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
         >
           {profile.subheadline}
         </motion.p>
@@ -53,18 +86,22 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3"
+          transition={{ duration: 0.5, delay: 0.65 }}
+          className="relative z-10 mt-10 flex flex-col sm:flex-row items-center justify-center gap-3"
         >
-          <Button size="lg" asChild className="group">
-            <a href="#projects">
-              View My Work
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
-          </Button>
-          <Button size="lg" variant="outline" asChild>
-            <a href="#contact">Contact Me</a>
-          </Button>
+          <MagneticButton>
+            <Button size="lg" asChild className="group">
+              <a href="#projects">
+                View My Work
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </Button>
+          </MagneticButton>
+          <MagneticButton>
+            <Button size="lg" variant="outline" asChild>
+              <a href="#contact">Contact Me</a>
+            </Button>
+          </MagneticButton>
           {profile.resumeUrl && (profile.resumeUrl as string) !== "#" && (
             <Button size="lg" variant="ghost" asChild className="text-muted-foreground hover:text-foreground">
               <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
@@ -75,12 +112,13 @@ export function Hero() {
           )}
         </motion.div>
 
-        {/* Stats — rendered as mini-cards for visual weight */}
+        {/* Stats — parallax mini-cards */}
         <motion.div
+          style={{ y: statsY }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 flex flex-wrap items-center justify-center gap-4"
+          transition={{ duration: 0.6, delay: 0.85 }}
+          className="relative z-10 mt-16 flex flex-wrap items-center justify-center gap-4"
         >
           {profile.stats.map((stat) => (
             <div
@@ -97,7 +135,7 @@ export function Hero() {
             <span>{profile.location}</span>
           </div>
         </motion.div>
-      </div>
+      </Spotlight>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { Menu, X, SquareTerminal } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { label: "About", href: "#capabilities", sectionId: "capabilities" },
+  { label: "Process", href: "#process", sectionId: "process" },
   { label: "Projects", href: "#projects", sectionId: "projects" },
   { label: "Experience", href: "#experience", sectionId: "experience" },
   { label: "Skills", href: "#skills", sectionId: "skills" },
@@ -22,6 +23,7 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState("");
   const pathname = usePathname();
   const isPlayground = pathname === "/playground";
+  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -130,6 +132,15 @@ export function Navbar() {
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </nav>
+
+        {/* Scroll progress indicator */}
+        {!isPlayground && (
+          <motion.div
+            aria-hidden
+            style={{ scaleX: scrollYProgress }}
+            className="absolute bottom-0 left-0 right-0 h-px origin-left bg-gradient-to-r from-primary/70 via-blue-400/70 to-violet-400/70"
+          />
+        )}
       </motion.header>
 
       {/* Mobile menu */}

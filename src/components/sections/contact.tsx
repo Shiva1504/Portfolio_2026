@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, Github, Linkedin, ArrowUpRight, Phone, Download, FileText } from "lucide-react";
+import { Mail, Github, Linkedin, ArrowUpRight, Phone, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { profile } from "@/data/profile";

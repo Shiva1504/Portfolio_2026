@@ -1,12 +1,16 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ExternalLink, Github, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SectionHeader } from "@/components/shared/section-header";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { TechBadge } from "@/components/shared/tech-badge";
+import { TiltCard } from "@/components/shared/tilt-card";
+import { Spotlight } from "@/components/shared/spotlight";
 import { featuredProjects, otherProjects, type Project } from "@/data/projects";
 
 const projectIcons: Record<string, string[]> = {
@@ -43,9 +47,20 @@ function ProjectVisual({
 }) {
   const icons = projectIcons[projectId] || [];
   const gradient = categoryGradients[category];
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  // Gentle parallax drift on the tech icons as the card scrolls through view.
+  const iconsY = useTransform(scrollYProgress, [0, 1], [18, -18]);
 
   return (
-    <div className="relative aspect-[4/3] rounded-xl border border-border/50 bg-card overflow-hidden group-hover:border-border/80 transition-colors duration-300">
+    <div
+      ref={ref}
+      className="relative z-10 aspect-[4/3] rounded-xl border border-border/50 bg-card overflow-hidden group-hover:border-border/80 transition-colors duration-300"
+      style={{ transformStyle: "preserve-3d" }}
+    >
       {/* Browser chrome header */}
       <div className="absolute top-0 left-0 right-0 h-8 bg-muted/90 border-b border-border/40 flex items-center px-3 gap-1.5 z-10">
         <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
@@ -70,15 +85,18 @@ function ProjectVisual({
         }}
       />
 
-      {/* Tech icons — staggered */}
-      <div className="absolute inset-0 top-8 flex items-center justify-center">
-        <div className="flex items-end gap-3">
+      {/* Tech icons — staggered, with scroll parallax + 3D pop */}
+      <motion.div
+        style={{ y: iconsY }}
+        className="absolute inset-0 top-8 flex items-center justify-center"
+      >
+        <div className="flex items-end gap-3" style={{ transformStyle: "preserve-3d" }}>
           {icons.map((icon, i) => (
             <div
               key={icon}
               className="w-12 h-12 rounded-xl bg-background/75 border border-border/50 flex items-center justify-center p-2.5 shadow-lg transition-transform duration-300 group-hover:scale-105"
               style={{
-                transform: `translateY(${i === 0 ? 6 : i === 1 ? -10 : 4}px)`,
+                transform: `translateY(${i === 0 ? 6 : i === 1 ? -10 : 4}px) translateZ(40px)`,
               }}
             >
               <Image
@@ -91,7 +109,7 @@ function ProjectVisual({
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Large watermark number */}
       <div className="absolute bottom-2 right-4 text-6xl font-black text-foreground/[0.04] select-none leading-none">
@@ -102,11 +120,9 @@ function ProjectVisual({
 }
 
 function OtherProjectCard({ project }: { project: Project }) {
-  const hasRealGithub = project.githubUrl && !project.githubUrl.endsWith("Shiva1504");
-  const hasRealLive = project.liveUrl && !project.liveUrl.endsWith("Shiva1504");
-
   return (
-    <article className="p-5 rounded-xl border border-border/50 bg-card/30 hover:border-border hover:bg-card/60 transition-all duration-200 group flex flex-col h-full">
+    <Spotlight className="rounded-xl h-full" size={260}>
+    <article className="relative z-10 p-5 rounded-xl border border-border/50 bg-card/30 hover:border-border hover:bg-card/60 transition-all duration-200 group flex flex-col h-full">
       <div className="flex items-start justify-between mb-3 gap-2">
         <Badge variant="outline" className="text-xs shrink-0">
           {categoryLabels[project.category]}
@@ -155,6 +171,7 @@ function OtherProjectCard({ project }: { project: Project }) {
         )}
       </div>
     </article>
+    </Spotlight>
   );
 }
 
@@ -165,7 +182,7 @@ export function FeaturedProjects() {
         <SectionHeader
           label="Selected Work"
           title="Projects that solve real problems"
-          description="Each project was built to address a specific business need — not just to learn a technology."
+          description="Each project was built to address a specific business need, not just to learn a technology."
         />
 
         {/* Featured case studies */}
@@ -175,11 +192,15 @@ export function FeaturedProjects() {
               <article className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 group">
                 {/* Project visual */}
                 <div className={`lg:col-span-5 ${i % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
-                  <ProjectVisual
-                    projectId={project.id}
-                    index={i}
-                    category={project.category}
-                  />
+                  <TiltCard max={6}>
+                    <Spotlight className="rounded-xl" size={300}>
+                      <ProjectVisual
+                        projectId={project.id}
+                        index={i}
+                        category={project.category}
+                      />
+                    </Spotlight>
+                  </TiltCard>
                 </div>
 
                 {/* Project details */}
@@ -220,7 +241,7 @@ export function FeaturedProjects() {
                     </div>
                     <div>
                       <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1.5">
-                        Technical Decisions
+                        Architecture & Trade-offs
                       </h4>
                       <p>{project.techDecisions}</p>
                     </div>
@@ -232,7 +253,10 @@ export function FeaturedProjects() {
                     </div>
                   </div>
 
-                  <div className="mt-6 flex flex-wrap gap-1.5">
+                  <div className="mt-6 flex flex-wrap items-center gap-1.5">
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/50 mr-1">
+                      Built with
+                    </span>
                     {project.technologies.map((tech) => (
                       <TechBadge key={tech} name={tech} />
                     ))}
@@ -282,7 +306,7 @@ export function FeaturedProjects() {
                 More Projects
               </h3>
               <p className="text-xs text-muted-foreground/60">
-                Additional work — smaller scope, focused on specific skills.
+                Additional work, smaller scope, focused on specific skills.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -13,7 +13,7 @@ export function AIWork() {
         <SectionHeader
           label="AI & Automation"
           title="Intelligent systems I've built"
-          description="AI isn't a buzzword in my stack — it's a production tool I use to solve real business problems."
+          description="AI isn't a buzzword in my stack. It's a production tool I use to solve real business problems."
         />
 
         <div className="space-y-6">

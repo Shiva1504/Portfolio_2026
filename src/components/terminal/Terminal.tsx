@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { JetBrains_Mono } from "next/font/google";
 import { allProjects } from "@/data/projects";
@@ -63,23 +63,17 @@ function Prompt() {
 function BootLine({ text, startDelay = 0 }: { text: string; startDelay?: number }) {
   const [chars, setChars] = useState(0);
   useEffect(() => {
-    let rafId: number;
+    let interval: ReturnType<typeof setInterval>;
     const timeout = setTimeout(() => {
       let i = 0;
-      const tick = () => {
-        i++;
-        setChars(i);
-        if (i < text.length) rafId = requestAnimationFrame(tick);
-      };
-      // ~18ms per char via rAF batching
-      const interval = setInterval(() => {
+      // ~18ms per char
+      interval = setInterval(() => {
         i++;
         setChars(i);
         if (i >= text.length) clearInterval(interval);
       }, 18);
-      return () => clearInterval(interval);
     }, startDelay);
-    return () => { clearTimeout(timeout); cancelAnimationFrame(rafId); };
+    return () => { clearTimeout(timeout); clearInterval(interval); };
   }, [text, startDelay]);
 
   return (
@@ -116,7 +110,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function HelpOutput() {
   const cmds: [string, string][] = [
-    ["/projects",    "All projects — tech stack & impact"],
+    ["/projects",    "All projects, tech stack and impact"],
     ["/experience",  "Work history & education"],
     ["/skills",      "Categorized technical skills"],
     ["/about",       "Developer bio & summary"],
@@ -176,22 +170,20 @@ function ProjectsOutput() {
 function ExperienceOutput() {
   return (
     <Section title="Experience & Education">
-      <div className="space-y-4 pl-1">
+      <div className="space-y-5 pl-1">
         {experiences.map((exp) => (
           <div key={exp.id} className="border-l-2 pl-3 space-y-1" style={{ borderColor: DIM }}>
             <div>{g(exp.title)}{m(" @ ")}{t(exp.company)}</div>
-            <div className="pl-2">{m(exp.period + "  ·  " + exp.type)}</div>
+            <div className="pl-2">{m(exp.period + "  ·  " + exp.type + "  ·  " + exp.location)}</div>
+            <div className="pl-2" style={{ color: MUT }}>{exp.description}</div>
             <div className="pl-2">
               {m("stack: ")}{t(exp.technologies.slice(0, 8).join(" · "))}
               {exp.technologies.length > 8 ? m(` +${exp.technologies.length - 8}`) : ""}
             </div>
             <div className="pl-2 space-y-0.5 mt-1">
-              {exp.achievements.slice(0, 4).map((a, idx) => (
+              {exp.achievements.map((a, idx) => (
                 <div key={idx}>{m("• ")}<span style={{ color: MUT }}>{a}</span></div>
               ))}
-              {exp.achievements.length > 4 && (
-                <div>{m(`  … and ${exp.achievements.length - 4} more achievements`)}</div>
-              )}
             </div>
           </div>
         ))}
@@ -207,10 +199,10 @@ function ExperienceOutput() {
 function SkillsOutput() {
   return (
     <Section title="Technical Skills">
-      <div className="space-y-2 pl-1">
+      <div className="space-y-3 pl-1">
         {skillCategories.map((cat) => (
           <div key={cat.name}>
-            <div>{o(cat.name + ":")}</div>
+            <div>{o(cat.name + ":")}{" "}{m(`— ${cat.subtitle}`)}</div>
             <div className="pl-4 flex flex-wrap gap-x-1 gap-y-0">
               {cat.skills.map((s, i) => (
                 <React.Fragment key={s.name}>
@@ -234,8 +226,19 @@ function AboutOutput() {
         <Row label="role:">{profile.role}</Row>
         <Row label="location:">{profile.location}</Row>
         <Row label="status:">{g("● ")}{g(profile.availability)}</Row>
-        <Row label="stack:">{"Laravel · Next.js · PHP · MySQL · OpenAI API · Docker"}</Row>
-        <Row label="exp:">{"Currently at Sportiff India — ERP systems, admin panels, AI integrations, 7+ production environments"}</Row>
+        <div className="flex gap-2 flex-wrap">
+          <span style={{ color: MUT, minWidth: "9ch", flexShrink: 0 }}>summary:</span>
+          <span style={{ color: MUT }}>{profile.subheadline}</span>
+        </div>
+        <Row label="domains:">{skillCategories.map(c => c.name).join(" · ")}</Row>
+        <Row label="exp:">{experiences[0].description}</Row>
+        <div className="flex gap-2 flex-wrap mt-1">
+          {profile.stats.map(s => (
+            <span key={s.label} style={{ color: MUT }}>
+              {g(s.value)}{" "}{t(s.label)}{"  "}
+            </span>
+          ))}
+        </div>
       </div>
     </Section>
   );
@@ -272,7 +275,8 @@ function WhoamiOutput() {
       <div>{g(profile.fullName)}</div>
       <Row label="role:">{profile.role}</Row>
       <Row label="location:">{profile.location}</Row>
-      <Row label="focus:">{"Laravel · Next.js · REST APIs · AI Integrations"}</Row>
+      <Row label="focus:">{skillCategories.map(c => c.name).join(" · ")}</Row>
+      <Row label="approach:">{profile.headline}</Row>
       <Row label="status:">{g(profile.availability)}</Row>
       <Row label="github:">
         <a href={profile.github} target="_blank" rel="noopener noreferrer" style={{ color: BLU }} className="hover:underline">
@@ -364,12 +368,24 @@ function resolve(cmd: string): React.ReactNode {
 
 // ─── Terminal Component ───────────────────────────────────────────────────────
 export function Terminal() {
-  const [lines, setLines] = useState<Line[]>([]);
+  // Seed the boot lines in the initializer so the effect doesn't setState
+  // synchronously on mount.
+  const [lines, setLines] = useState<Line[]>(() => [
+    mkLine(<BootLine text={BOOT[0]} startDelay={0} />),
+    mkLine(<BootLine text={BOOT[1]} startDelay={600} />),
+    mkLine(<BootLine text={BOOT[2]} startDelay={1100} />),
+  ]);
   const [input, setInput] = useState("");
   const [cmdHistory, setCmdHistory] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState(-1);
   const [booting, setBooting] = useState(true);
-  const [suggestion, setSuggestion] = useState("");
+
+  // Derived from input — not state. No effect, no synchronous setState.
+  const suggestion = useMemo(() => {
+    if (!input.startsWith("/") || input.length < 2) return "";
+    const match = COMMANDS.find((c) => c.startsWith(input) && c !== input);
+    return match ? match.slice(input.length) : "";
+  }, [input]);
 
   const router = useRouter();
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -381,24 +397,16 @@ export function Terminal() {
     if (el) el.scrollTop = el.scrollHeight;
   }, [lines]);
 
-  // Boot sequence — no hasBooted guard so Strict Mode's second run cleanly
-  // replaces the first (setLines replaces state, cancelled timer means no leak)
+  // Boot sequence — boot lines are seeded in the initializer above; this only
+  // appends the welcome block and ends the boot state after the typing delay.
   useEffect(() => {
-    setBooting(true);
-    // Replace state with fresh boot lines on every run
-    setLines([
-      mkLine(<BootLine text={BOOT[0]} startDelay={0} />),
-      mkLine(<BootLine text={BOOT[1]} startDelay={600} />),
-      mkLine(<BootLine text={BOOT[2]} startDelay={1100} />),
-    ]);
-
     const timer = setTimeout(() => {
       setLines(prev => [...prev, blank(), mkLine(<Welcome />), blank()]);
       setBooting(false);
     }, 2200);
 
     return () => clearTimeout(timer);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   // Focus input once boot finishes
   useEffect(() => {
@@ -407,13 +415,6 @@ export function Terminal() {
       return () => clearTimeout(t);
     }
   }, [booting]);
-
-  // Tab suggestion
-  useEffect(() => {
-    if (!input.startsWith("/") || input.length < 2) { setSuggestion(""); return; }
-    const match = COMMANDS.find(c => c.startsWith(input) && c !== input);
-    setSuggestion(match ? match.slice(input.length) : "");
-  }, [input]);
 
   const exec = useCallback((raw: string) => {
     const cmd = raw.trim();
@@ -439,7 +440,6 @@ export function Terminal() {
         e.preventDefault();
         exec(input);
         setInput("");
-        setSuggestion("");
         break;
       case "ArrowUp":
         e.preventDefault();
@@ -460,7 +460,7 @@ export function Terminal() {
         break;
       case "Tab":
         e.preventDefault();
-        if (suggestion) { setInput(prev => prev + suggestion); setSuggestion(""); }
+        if (suggestion) { setInput(prev => prev + suggestion); }
         break;
       case "c":
         if (e.ctrlKey) {
@@ -469,7 +469,7 @@ export function Terminal() {
             ...prev,
             mkLine(<div className="flex gap-2"><Prompt /><span style={{ color: MUT }}>^C</span></div>),
           ]);
-          setInput(""); setSuggestion("");
+          setInput("");
         }
         break;
       case "l":
@@ -514,7 +514,7 @@ export function Terminal() {
           >
             <div className="flex items-center gap-1.5">
               {[
-                { bg: "#ff5f57", symbol: "×", title: "Close — go home", onClick: () => router.push("/") },
+                { bg: "#ff5f57", symbol: "×", title: "Close (go home)", onClick: () => router.push("/") },
                 { bg: "#febc2e", symbol: "−", title: "Minimize", onClick: undefined },
                 { bg: "#28c840", symbol: "⤢", title: "Maximize", onClick: undefined },
               ].map(({ bg, symbol, title, onClick }) => (

@@ -8,14 +8,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sambasiva Naidu — Full Stack Developer (Laravel + Next.js)",
+  title: "Sambasiva Naidu | Software Engineer",
   description:
-    "Full Stack Developer building production ERP systems with Laravel (APIs) and Next.js (Frontend). REST APIs, deployment & server management.",
+    "Software engineer focused on outcomes, not frameworks. I design systems, ship products, and optimize what's slow across APIs, web apps, AI, and infrastructure.",
   keywords: [
+    "Software Engineer",
     "Full Stack Developer",
     "Laravel Developer",
     "Next.js Developer",
-    "ERP Developer",
     "REST API",
     "PHP",
     "TypeScript",
@@ -24,17 +24,17 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Dasari Sambasiva Naidu" }],
   openGraph: {
-    title: "Sambasiva Naidu — Full Stack Developer (Laravel + Next.js)",
+    title: "Sambasiva Naidu | Software Engineer",
     description:
-      "Building & maintaining production ERP systems. APIs, deployment & server management.",
+      "Software engineer focused on outcomes, not frameworks. APIs, web apps, AI, and infrastructure.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sambasiva Naidu — Full Stack Developer (Laravel + Next.js)",
+    title: "Sambasiva Naidu | Software Engineer",
     description:
-      "Building & maintaining production ERP systems. APIs, deployment & server management.",
+      "Software engineer focused on outcomes, not frameworks. APIs, web apps, AI, and infrastructure.",
   },
   robots: {
     index: true,

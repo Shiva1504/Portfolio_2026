@@ -136,3 +136,56 @@
 ::selection {
   background: oklch(0.97 0.004 260 / 15%);
 }
+
+/* Ambient gradient drift — GPU-only (transform), used behind the hero */
+@keyframes gradient-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, -4%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes gradient-drift-alt {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(-7%, 5%, 0) scale(0.95);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+}
+
+.animate-gradient-drift {
+  animation: gradient-drift 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-gradient-drift-alt {
+  animation: gradient-drift-alt 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Respect users who prefer reduced motion — kill ambient/looping motion.
+   Framer Motion components also read prefers-reduced-motion via useReducedMotion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-gradient-drift,
+  .animate-gradient-drift-alt {
+    animation: none !important;
+    transform: none !important;
+  }
+}

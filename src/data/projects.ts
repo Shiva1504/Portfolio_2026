@@ -86,7 +86,7 @@ export const projects: Project[] = [
     techDecisions:
       "Laravel's Eloquent ORM simplified complex billing calculations. Bootstrap ensured mobile-first responsive design critical for on-field usage by retailers.",
     impact:
-      "Digitized daily operations for multiple retailers — eliminated paper-based tracking errors and reduced billing disputes.",
+      "Digitized daily operations for multiple retailers, eliminating paper-based tracking errors and reducing billing disputes.",
     challenges:
       "Designing flexible payment cycle logic that supports partial payments, advances, and variable pricing across different retailers.",
     technologies: ["Laravel 10", "PHP 8.x", "MySQL", "Bootstrap 5"],
@@ -106,7 +106,7 @@ export const projects: Project[] = [
     techDecisions:
       "PHP handles the backend API calls to Gemini to keep credentials server-side. Async JS manages the streaming UX without blocking. Bootstrap provides the chat UI scaffolding.",
     impact:
-      "Sub-second response latency with domain-accurate answers — demonstrates practical AI integration and prompt engineering.",
+      "Sub-second response latency with domain-accurate answers, demonstrating practical AI integration and prompt engineering.",
     challenges:
       "Engineering prompts that constrain Gemini to domain-specific responses without hallucination, and managing async state for smooth real-time chat updates.",
     technologies: ["PHP", "JavaScript", "Google Gemini API", "Bootstrap"],
@@ -126,7 +126,7 @@ export const projects: Project[] = [
     techDecisions:
       "AJAX enables dynamic task operations without page reloads, improving perceived performance. Bootstrap provides a consistent, responsive layout.",
     impact:
-      "Boosted task management efficiency by 35% versus spreadsheet-based tracking — measured by task resolution time.",
+      "Boosted task management efficiency by 35% versus spreadsheet-based tracking, measured by task resolution time.",
     challenges:
       "Designing the analytics queries to be performant across large task sets, and handling concurrent AJAX updates without race conditions.",
     technologies: ["PHP", "MySQL", "Bootstrap", "AJAX"],
@@ -146,7 +146,7 @@ export const projects: Project[] = [
     techDecisions:
       "Laravel FormRequest classes enforce validation at the request layer, keeping controllers clean. Blade templates for server-rendered views ensure fast load times without a JS framework overhead.",
     impact:
-      "Complete, production-structured job board — demonstrates Laravel MVC discipline, validation patterns, and file management.",
+      "Complete, production-structured job board that demonstrates Laravel MVC discipline, validation patterns, and file management.",
     challenges:
       "Designing a clean separation between admin and public routes, and handling file upload validation with proper MIME type checking.",
     technologies: ["Laravel", "PHP", "MySQL", "Blade", "Bootstrap"],
@@ -166,7 +166,7 @@ export const projects: Project[] = [
     techDecisions:
       "Next.js with TypeScript for type-safe game logic. localStorage for client-side persistence without backend dependency, keeping the app fast and deployable as a static site.",
     impact:
-      "Interactive game engine with real-time score updates and statistical analysis — demonstrates frontend architecture skills.",
+      "Interactive game engine with real-time score updates and statistical analysis, demonstrating frontend architecture skills.",
     challenges:
       "Building a realistic scoring engine with proper cricket rules, handling edge cases in MVP calculation algorithms, and managing complex state across innings.",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
@@ -185,7 +185,7 @@ export const projects: Project[] = [
       "Built a notes app with authentication, role-based access control, and comprehensive test suite. Achieved 95% code coverage with optimized database queries.",
     techDecisions:
       "Raw PHP with MVC pattern to demonstrate architectural understanding without framework abstraction. Pest for elegant testing syntax and fast execution.",
-    impact: "95% test coverage — production-quality codebase demonstrating testing-first development approach.",
+    impact: "95% test coverage with a production-quality codebase demonstrating a testing-first development approach.",
     challenges:
       "Implementing role-based access without a framework, building a custom MVC router, and achieving high test coverage on authentication flows.",
     technologies: ["PHP", "MySQL", "Composer", "Pest", "Tailwind CSS"],
@@ -205,7 +205,7 @@ export const projects: Project[] = [
     techDecisions:
       "React's component model enables reusable matrix cells and row/column logic. Pure JavaScript without TypeScript kept the build simple for a data-visualization-focused project.",
     impact:
-      "Interactive education visualization tool — demonstrates component architecture and dynamic data rendering in React.",
+      "Interactive education visualization tool that demonstrates component architecture and dynamic data rendering in React.",
     challenges:
       "Designing a performant matrix rendering approach that handles variable row/column counts without re-rendering the entire grid on each data update.",
     technologies: ["React.js", "JavaScript", "HTML5", "CSS3"],
