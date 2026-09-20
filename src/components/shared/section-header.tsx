@@ -10,11 +10,12 @@ interface SectionHeaderProps {
 
 export function SectionHeader({ label, title, description }: SectionHeaderProps) {
   return (
-    <AnimatedSection className="mb-16">
-      <p className="text-sm font-medium tracking-widest uppercase text-muted-foreground mb-3">
+    <AnimatedSection className="mb-12">
+      <p className="hud-label mb-3 text-primary/80">
+        <span aria-hidden className="mr-2 text-muted-foreground/50">{"//"}</span>
         {label}
       </p>
-      <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+      <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
         {title}
       </h2>
       {description && (
