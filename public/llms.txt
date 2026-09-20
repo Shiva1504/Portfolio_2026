@@ -1,0 +1,15 @@
+# Dasari Sambasiva Naidu
+
+> Software engineer focused on outcomes, not frameworks. I design systems, ship products, and optimize what's slow across APIs, web apps, AI integrations, and infrastructure. Based in Pune, India.
+
+## Pages
+
+- [Portfolio](https://www.dsn7.in/): Capabilities, featured projects, experience, skills, and AI work.
+- [Playground](https://www.dsn7.in/playground): Interactive developer terminal for browsing profile, projects, and skills.
+- [Full profile in plain text](https://www.dsn7.in/llms-full.txt): About, experience, education, projects, and skills.
+
+## Links
+
+- [GitHub](https://github.com/Shiva1504)
+- [LinkedIn](https://www.linkedin.com/in/dasarisambasivanaidu)
+- Contact: contact@dsn7.in

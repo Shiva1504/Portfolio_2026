@@ -11,6 +11,7 @@ export interface Project {
   technologies: string[];
   liveUrl?: string;
   githubUrl?: string;
+  repoUrl?: string;
   featured: boolean;
   category: "fullstack" | "frontend" | "ai" | "backend";
   image?: string;

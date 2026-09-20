@@ -1,41 +1,35 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://portfolio-2026-theta-three.vercel.app"),
-  title: "Sambasiva Naidu | Software Engineer",
-  description:
-    "Software engineer focused on outcomes, not frameworks. I design systems, ship products, and optimize what's slow across APIs, web apps, AI, and infrastructure.",
-  keywords: [
-    "Software Engineer",
-    "Full Stack Developer",
-    "Laravel Developer",
-    "Next.js Developer",
-    "REST API",
-    "PHP",
-    "TypeScript",
-    "Pune",
-    "India",
-  ],
-  authors: [{ name: "Dasari Sambasiva Naidu" }],
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Dasari Sambasiva Naidu | Software Engineer",
+    template: "%s | Dasari Sambasiva Naidu",
+  },
+  description: SITE_DESCRIPTION,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Sambasiva Naidu | Software Engineer",
-    description:
-      "Software engineer focused on outcomes, not frameworks. APIs, web apps, AI, and infrastructure.",
+    title: "Dasari Sambasiva Naidu | Software Engineer",
+    description: SITE_DESCRIPTION,
+    url: "/",
+    siteName: SITE_NAME,
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sambasiva Naidu | Software Engineer",
-    description:
-      "Software engineer focused on outcomes, not frameworks. APIs, web apps, AI, and infrastructure.",
+    title: "Dasari Sambasiva Naidu | Software Engineer",
+    description: SITE_DESCRIPTION,
   },
   robots: {
     index: true,

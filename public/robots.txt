@@ -1,0 +1,14 @@
+# Allow all crawlers, including search and AI-search bots
+# (Googlebot, Bingbot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot).
+User-agent: *
+Allow: /
+
+# AI training crawlers are currently allowed by the rule above.
+# To opt out of training, uncomment this block:
+# User-agent: GPTBot
+# User-agent: ClaudeBot
+# User-agent: Google-Extended
+# User-agent: CCBot
+# Disallow: /
+
+Sitemap: https://www.dsn7.in/sitemap.xml
