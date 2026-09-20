@@ -17,6 +17,10 @@ const projectIcons: Record<string, string[]> = {
   "saas-subscription": ["/Laravel.png", "/React.png", "/MySQL.png"],
   "stock-tracker": ["/Laravel.png", "/PHP.png", "/MySQL.png"],
   "milk-record": ["/Laravel.png", "/PHP.png", "/MySQL.png"],
+  "expense-tracker": ["/nextjs.png", "/TypeScript.png", "/Tailwind CSS.png"],
+  gaskhata: ["/Laravel.png", "/PHP.png", "/MySQL.png"],
+  talentgraph: ["/React.png"],
+  collegefind: ["/nextjs.png", "/TypeScript.png", "/React.png"],
   "gully-premier-league": ["/Next.js.png", "/TypeScript.png", "/Tailwind CSS.png"],
   "dynamic-notes": ["/PHP.png", "/MySQL.png", "/Tailwind CSS.png"],
   "employee-dashboard": ["/React.png", "/Tailwind CSS.png", "/JavaScript.png"],
@@ -157,7 +161,7 @@ function OtherProjectCard({ project }: { project: Project }) {
         {project.title}
       </h3>
       <p className="text-xs text-muted-foreground/80 mb-4 leading-relaxed flex-1">
-        {project.impact}
+        {project.impact ?? project.summary}
       </p>
 
       <div className="flex flex-wrap gap-1 mt-auto">
@@ -217,41 +221,49 @@ export function FeaturedProjects() {
 
                   {/* Role badge */}
                   <div className="flex items-center gap-2 mb-5">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-muted/60 border border-border/40 px-2.5 py-1 rounded-full">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary/60 shrink-0" />
-                      My role: {project.role}
-                    </span>
+                    {project.role && (
+                      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-muted/60 border border-border/40 px-2.5 py-1 rounded-full">
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary/60 shrink-0" />
+                        My role: {project.role}
+                      </span>
+                    )}
                     <Badge variant="outline" className="text-xs">
                       {categoryLabels[project.category]}
                     </Badge>
                   </div>
 
-                  <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-                    <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1.5">
-                        Problem
-                      </h4>
-                      <p>{project.problem}</p>
+                  {project.problem ? (
+                    <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                      <div>
+                        <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1.5">
+                          Problem
+                        </h4>
+                        <p>{project.problem}</p>
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1.5">
+                          Solution
+                        </h4>
+                        <p>{project.solution}</p>
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1.5">
+                          Architecture & Trade-offs
+                        </h4>
+                        <p>{project.techDecisions}</p>
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1.5">
+                          Impact
+                        </h4>
+                        <p>{project.impact}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1.5">
-                        Solution
-                      </h4>
-                      <p>{project.solution}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1.5">
-                        Architecture & Trade-offs
-                      </h4>
-                      <p>{project.techDecisions}</p>
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/70 mb-1.5">
-                        Impact
-                      </h4>
-                      <p>{project.impact}</p>
-                    </div>
-                  </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {project.summary}
+                    </p>
+                  )}
 
                   <div className="mt-6 flex flex-wrap items-center gap-1.5">
                     <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/50 mr-1">

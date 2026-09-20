@@ -150,15 +150,17 @@ function ProjectsOutput() {
               {t(p.title)}{" "}
               {m(`[${p.category}]`)}
             </div>
-            <div className="pl-4">
-              {m("╰ role:   ")}{t(p.role)}
-            </div>
+            {p.role && (
+              <div className="pl-4">
+                {m("╰ role:   ")}{t(p.role)}
+              </div>
+            )}
             <div className="pl-4">
               {m("  tech:   ")}{t(p.technologies.slice(0, 5).join(", "))}
               {p.technologies.length > 5 ? m(` +${p.technologies.length - 5}`) : ""}
             </div>
             <div className="pl-4">
-              {m("  impact: ")}<span style={{ color: MUT }}>{p.impact}</span>
+              {m(p.impact ? "  impact: " : "  about:  ")}<span style={{ color: MUT }}>{p.impact ?? p.summary}</span>
             </div>
           </div>
         ))}

@@ -2,12 +2,13 @@ export interface Project {
   id: string;
   title: string;
   subtitle: string;
-  role: string;
-  problem: string;
-  solution: string;
-  techDecisions: string;
-  impact: string;
-  challenges: string;
+  role?: string;
+  summary?: string;
+  problem?: string;
+  solution?: string;
+  techDecisions?: string;
+  impact?: string;
+  challenges?: string;
   technologies: string[];
   liveUrl?: string;
   githubUrl?: string;
@@ -18,6 +19,39 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    id: "expense-tracker",
+    title: "Personal Expense & Income Tracker",
+    subtitle: "Personal finance PWA with multi-account balances, custom categories, and a friend/family lending tracker",
+    summary:
+      "Tracks income and expenses across bank, cash, and wallet accounts into one total balance. Supports recurring items (SIP, EMI, Chit Fund), net lend/borrow tracking with settle-up, category-wise reports, and PIN/biometric lock. Installs to the home screen as a PWA with push notifications.",
+    technologies: ["Next.js", "Supabase", "PostgreSQL", "PWA", "Tailwind CSS", "TypeScript"],
+    liveUrl: "https://peit.dsn7.in/",
+    featured: true,
+    category: "fullstack",
+  },
+  {
+    id: "gaskhata",
+    title: "Gaskhata",
+    subtitle: "Order management system for a small private LPG cylinder business",
+    summary:
+      "Role-based (admin/employee) order and deposit tracking with full price-history logging for both cylinder MRP and per-cylinder deposit amounts, plus a generic items master for stock across cylinders, regulators, and accessories.",
+    technologies: ["Laravel", "Filament", "MySQL", "AWS EC2"],
+    featured: true,
+    category: "fullstack",
+  },
+  {
+    id: "talentgraph",
+    title: "TalentGraph",
+    subtitle: "Internal talent/skill network on a graph database",
+    summary:
+      "Go REST API and React frontend over a graph database (openCypher over Bolt), modeling who knows what and who has worked with whom. Answers path-based queries, such as mutual collaborators and the shortest skill-gap path, that are awkward to express in SQL.",
+    technologies: ["Go", "React", "Graph DB (openCypher/Bolt)"],
+    githubUrl: "https://github.com/Shiva1504/talentgraph-golang",
+    repoUrl: "https://github.com/Shiva1504/talentgraph-golang",
+    featured: true,
+    category: "backend",
+  },
   {
     id: "saas-subscription",
     title: "SaaS Subscription Platform",
@@ -43,9 +77,32 @@ export const projects: Project[] = [
       "Vite",
       "Docker",
     ],
-    githubUrl: "https://github.com/Shiva1504",
+    githubUrl: "https://github.com/Shiva1504/Laravel-React-Stripe-SaaS",
+    repoUrl: "https://github.com/Shiva1504/Laravel-React-Stripe-SaaS",
     featured: true,
     category: "fullstack",
+  },
+  {
+    id: "collegefind",
+    title: "CollegeFind",
+    subtitle: "Full-stack college discovery & comparison platform",
+    summary:
+      "Filterable, paginated search, college detail pages with multi-year placement data, side-by-side comparison of up to 3 colleges, and auth-gated saved items. All DB-backed through one query layer shared by the REST API and server-rendered pages.",
+    technologies: ["Next.js 16", "React 19", "TypeScript", "Prisma 7", "PostgreSQL", "NextAuth v5"],
+    githubUrl: "https://github.com/Shiva1504/college-discovery-platform",
+    repoUrl: "https://github.com/Shiva1504/college-discovery-platform",
+    featured: true,
+    category: "fullstack",
+  },
+  {
+    id: "cosmic-birthday",
+    title: "Cosmic Birthday",
+    subtitle: "Interactive 3D astronomy experience",
+    summary:
+      "Interactive 3D astronomy experience that computes a personalized Solar Return date from real orbital mechanics.",
+    technologies: ["Next.js 16", "Three.js/R3F", "TypeScript", "Vitest"],
+    featured: false,
+    category: "frontend",
   },
   {
     id: "stock-tracker",
@@ -72,7 +129,7 @@ export const projects: Project[] = [
       "Pest",
     ],
     githubUrl: "https://github.com/Shiva1504",
-    featured: true,
+    featured: false,
     category: "backend",
   },
   {
@@ -92,7 +149,7 @@ export const projects: Project[] = [
       "Designing flexible payment cycle logic that supports partial payments, advances, and variable pricing across different retailers.",
     technologies: ["Laravel 10", "PHP 8.x", "MySQL", "Bootstrap 5"],
     liveUrl: "https://github.com/Shiva1504",
-    featured: true,
+    featured: false,
     category: "fullstack",
   },
   {

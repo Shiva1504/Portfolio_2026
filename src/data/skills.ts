@@ -1,7 +1,7 @@
 export interface Skill {
   name: string;
   category: string;
-  level: "expert" | "advanced" | "proficient";
+  level?: "expert" | "advanced" | "proficient";
   icon?: string;
 }
 
@@ -19,11 +19,11 @@ export const skillCategories: SkillCategory[] = [
     subtitle: "The stack-agnostic core that outlasts any framework",
     skills: [
       { name: "System Design", category: "foundation", level: "advanced" },
-      { name: "API Design", category: "foundation", level: "expert", icon: "/rest-api-50.png" },
+      { name: "REST API Design", category: "foundation", level: "expert", icon: "/rest-api-50.png" },
       { name: "Data Modeling", category: "foundation", level: "expert" },
       { name: "Performance Optimization", category: "foundation", level: "advanced" },
       { name: "Testing & Debugging", category: "foundation", level: "advanced" },
-      { name: "Git & Version Control", category: "foundation", level: "expert", icon: "/Git.png" },
+      { name: "Git", category: "foundation", level: "expert", icon: "/Git.png" },
     ],
   },
   {
@@ -31,10 +31,14 @@ export const skillCategories: SkillCategory[] = [
     subtitle: "Business logic, APIs, and the data underneath",
     skills: [
       { name: "Laravel", category: "framework", level: "advanced", icon: "/Laravel.png" },
-      { name: "PHP", category: "language", level: "advanced", icon: "/PHP.png" },
+      { name: "PHP (Core & OOP)", category: "language", level: "advanced", icon: "/PHP.png" },
       { name: "Python", category: "language", level: "proficient", icon: "/Python.png" },
-      { name: "REST APIs", category: "backend", level: "expert", icon: "/rest-api-50.png" },
+      { name: "Django", category: "framework" },
+      { name: "Node.js", category: "runtime" },
+      { name: "Go", category: "language" },
+      { name: "JWT Auth", category: "backend" },
       { name: "WordPress", category: "cms", level: "advanced", icon: "/WordPress.png" },
+      { name: "Filament", category: "framework" },
     ],
   },
   {
@@ -48,6 +52,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "Vue.js", category: "framework", level: "proficient", icon: "/Vue.js.png" },
       { name: "Tailwind CSS", category: "framework", level: "expert", icon: "/Tailwind CSS.png" },
       { name: "Bootstrap", category: "framework", level: "advanced", icon: "/Bootstrap.png" },
+      { name: "Three.js / React Three Fiber", category: "framework" },
     ],
   },
   {
@@ -55,7 +60,7 @@ export const skillCategories: SkillCategory[] = [
     subtitle: "Putting models and scripts to work on real problems",
     skills: [
       { name: "OpenAI API", category: "ai", level: "advanced", icon: "/openai.png" },
-      { name: "Google Gemini", category: "ai", level: "advanced", icon: "/gemini-color.png" },
+      { name: "Google Gemini API", category: "ai", level: "advanced", icon: "/gemini-color.png" },
       { name: "Prompt Engineering", category: "ai", level: "advanced" },
       { name: "TensorFlow", category: "ai", level: "proficient", icon: "/TensorFlow.png" },
       { name: "Workflow Automation", category: "automation", level: "advanced" },
@@ -68,9 +73,14 @@ export const skillCategories: SkillCategory[] = [
       { name: "Docker", category: "devops", level: "advanced", icon: "/Docker.png" },
       { name: "Linux", category: "os", level: "advanced", icon: "/Linux.png" },
       { name: "Shell Scripting", category: "devops", level: "advanced" },
-      { name: "Vercel", category: "deployment", level: "advanced", icon: "/vercel.png" },
+      { name: "VPS Migration", category: "devops" },
+      { name: "AWS EC2", category: "deployment" },
       { name: "Railway", category: "deployment", level: "advanced", icon: "/railway-2.png" },
+      { name: "Vercel", category: "deployment", level: "advanced", icon: "/vercel.png" },
       { name: "Netlify", category: "deployment", level: "proficient", icon: "/netlify.png" },
+      { name: "Cron Jobs", category: "devops" },
+      { name: "Netdata", category: "devops" },
+      { name: "PWA", category: "frontend" },
     ],
   },
   {
@@ -78,9 +88,22 @@ export const skillCategories: SkillCategory[] = [
     subtitle: "Modeling, querying, and making it fast",
     skills: [
       { name: "MySQL", category: "database", level: "expert", icon: "/MySQL.png" },
+      { name: "PostgreSQL", category: "database" },
+      { name: "SQLite", category: "database" },
+      { name: "MongoDB", category: "database" },
       { name: "Firebase", category: "database", level: "advanced", icon: "/Firebase.png" },
+      { name: "Prisma", category: "database" },
+      { name: "Graph DB (openCypher/Bolt)", category: "database" },
       { name: "Query Optimization", category: "database", level: "advanced" },
+    ],
+  },
+  {
+    name: "Testing",
+    subtitle: "Proving it works before it ships",
+    skills: [
       { name: "Postman", category: "tool", level: "expert", icon: "/Postman.png" },
+      { name: "Vitest", category: "tool" },
+      { name: "Pest", category: "tool" },
     ],
   },
 ];
